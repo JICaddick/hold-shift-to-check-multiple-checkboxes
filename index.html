@@ -96,6 +96,41 @@
   </div>
 
 <script>
+
+// First off we need to get all the checkboxes from our page into the function. We can do this by using the querySelectorAll method and passing in the input type checkbox. This will return a node list of all the checkboxes on the page.
+    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+    //We'll need to create a variable to hold the last checked checkbox. -> lastChecked.
+    let lastChecked;
+
+    // Then we add an event listener to each checkbox
+    // Click will fire when the user uses either the mouse or the keyboard to click on the checkbox.
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+
+    //Now, we need to create a function to handle the click event. -> handleCheck.
+
+    function handleCheck(e) {
+      //check if the shift key is down and check if the user is checking the box.
+      //We set inbetween as false because we don't know if the user is checking or unchecking the box.
+      let inBetween = false;
+      //this.checked is a property that comes with the event object. It will tell us if the checkbox is checked or not.
+      if(e.shiftKey && this.checked) {
+        //loop over all the checkboxes.
+        checkboxes.forEach(checkbox => {
+          console.log(checkbox);
+          // here we set inBetween to equal not inBetween. This will toggle the value of inBetween. So if it's false, it will be true and vice versa.
+          if(checkbox === this || checkbox === lastChecked) {
+            inBetween = !inBetween;
+            console.log('Starting to check them in between!');
+          }
+
+          if(inBetween) {
+            checkbox.checked = true;
+          }
+        });
+      }
+      lastChecked = this;
+    }
+
 </script>
 </body>
 </html>
